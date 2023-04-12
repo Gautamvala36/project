@@ -25,7 +25,7 @@ require_once("include/css.php");
                                              <thead>
                                                   <tr>
                                                        <th class="wd-15p border-bottom-0">SR NO</th>
-                                                       <th class="wd-15p border-bottom-0">User Id</th>
+                                                       <th class="wd-15p border-bottom-0">User_Email</th>
                                                        <th class="wd-15p border-bottom-0">Bill date</th>
                                                        <th class="wd-20p border-bottom-0">Mobile number</th>
                                                        <th class="wd-20p border-bottom-0">City</th>
@@ -39,7 +39,8 @@ require_once("include/css.php");
                                              </thead>
                                              <tbody>
                                                   <?php
-                                                  $sql = "SELECT * FROM bill";
+
+                                                  $sql = "SELECT u.email as user_email, b.*  FROM users u,bill b WHERE u.id = b.usersid";
                                                   $statement = $db->prepare($sql);
                                                   $statement->setFetchMode(PDO::FETCH_ASSOC);
                                                   $statement->execute();
@@ -53,7 +54,7 @@ require_once("include/css.php");
                                                                  <?php echo $count++; ?>
                                                             </td>
                                                             <td>
-                                                                 <?php echo $row['usersid']; ?>
+                                                                 <?php echo $row['user_email']; ?>
                                                             </td>
                                                             <td>
                                                                  <?php echo date("d-m-Y", strtotime($row['billdate'])); ?>
@@ -74,13 +75,13 @@ require_once("include/css.php");
 
                                                                  ?>
                                                             </td>
-                                                            <td>
+                                                            <td align="center">
                                                                  <?php
 
                                                                  if ($row['paymentstatus'] == 1) {
-                                                                      echo "PAID";
+                                                                      echo "<h4><span class='badge bg-success me-1 center mb-1 mt-1'>PAID</span></h4>";
                                                                  } else {
-                                                                      echo "UNPAID";
+                                                                      echo "<h4><span class='badge bg-danger  me-1 center mb-1 mt-1'>UNPAID</span></h4>";
                                                                  }
 
                                                                  ?>
@@ -105,9 +106,12 @@ require_once("include/css.php");
                                                                  <?php echo $row['amount']; ?>
                                                             </td>
                                                             <td align="center">
-                                                                 <h3><i class="fa fa-eye" data-bs-toggle="tooltip" title=""
+                                                                 <h3>
+                                                                      <i class="fa fa-eye" data-bs-toggle="tooltip" title=""
                                                                            data-bs-original-title="View More"
-                                                                           aria-label="fa fa-eye"></i></h3>
+                                                                           aria-label="fa fa-eye">
+                                                                      </i>
+                                                                 </h3>
                                                             </td>
                                                        </tr>
                                                        <?php
