@@ -1,7 +1,7 @@
 <?php
 date_default_timezone_set("asia/kolkata");
 define("FILENAME",$_SERVER['DOCUMENT_ROOT']."project/admin/include/error.log");
-define("ISDEBUG",false);
+define("ISDEBUG",true);
 define("SERVER","localhost:3306");
 define("USERNAME","root");
 define("PASSWORD","");
