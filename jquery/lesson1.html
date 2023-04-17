@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+     <meta charset="UTF-8">
+     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>Example of Jquery</title>
+     <style>
+          div{
+               padding: 25px;
+               background-color: rgb(63, 50, 50);
+               color: white;
+               border: 2px solid white;
+          }
+     </style>
+</head>
+
+<body>
+     <h1 align="center">
+          <i>Todays Headlines</i>
+     </h1>
+     <hr>
+     <div id="h1">
+          <p>
+               Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nobis, delectus? Eos, deleniti officiis. Atque
+               eligendi nulla at voluptatum nisi illo porro sed ratione, tempore corrupti, assumenda magni voluptatibus
+               qui dolor.
+               <button type="submit">Hide me</button>
+          </p>
+     </div>
+     <div >
+          <p>
+               Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nobis, delectus? Eos, deleniti officiis. Atque
+               eligendi nulla at voluptatum nisi illo porro sed ratione, tempore corrupti, assumenda magni voluptatibus
+               qui dolor.
+               <button type="submit">Hide me</button>
+          </p>
+     </div>
+     <div>
+          <p>
+               Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nobis, delectus? Eos, deleniti officiis. Atque
+               eligendi nulla at voluptatum nisi illo porro sed ratione, tempore corrupti, assumenda magni voluptatibus
+               qui dolor.
+               <button type="submit">Hide me</button>
+          </p>
+     </div>
+     <div>
+          <p>
+               Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nobis, delectus? Eos, deleniti officiis. Atque
+               eligendi nulla at voluptatum nisi illo porro sed ratione, tempore corrupti, assumenda magni voluptatibus
+               qui dolor.
+               <button type="submit">Hide me</button>
+          </p>
+     </div>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+     <script>
+          $(document).ready(function(){
+               console.log("jQuery Work");
+               $("div").click(function () {
+                    console.log("div 1 clicked");
+                    $(this).hide(1000);   
+               });        
+          });
+     </script>
+</body>
+
+</html>
