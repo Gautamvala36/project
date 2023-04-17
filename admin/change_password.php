@@ -62,5 +62,4 @@ require_once("include/css.php");
           <?php
           require_once("include/script.php");
           ?>
-
-          </html>
+</html>
