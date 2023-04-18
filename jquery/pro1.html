@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Example of Jquery</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <style>
+        div {
+            padding: 25px;
+            border: 1px solid black;
+            border-radius: 25px;
+            width: 400px;
+            font-size: 1.5rem;
+        }
+    </style>
+</head>
+
+<body>
+    <h1 align="center">
+        Example images flip of Jquery
+    </h1>
+    <hr>
+    <div align="center" id="box" class="animate__animated">
+        <img  src="images/15.jpg" width="360px" alt="">
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            console.log("Jquery Working..");
+            $("div").mouseenter(function () {
+                console.log("Mouse Enter");
+                $(this).addClass("animate__flipInY");
+                $("img").attr("src","images/16.jpg");
+            });
+            $("div").mouseleave(function () {
+                console.log("Mouse Leave");
+                $("img").attr("src","images/15.jpg");
+            })
+        });
+    </script>
+</body>
+
+</html>
