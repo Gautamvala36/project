@@ -5,7 +5,7 @@ require_once("include/css.php");
 ?>
 </head>
 
-<body class="app sidebar-mini">i
+<body class="app sidebar-mini">
      <?php
      require_once("include/seller_navbar.php");
      ?>
@@ -98,7 +98,30 @@ require_once("include/css.php");
                                                   </tr>
                                              </thead>
                                              <tbody id="mytable">
+                                                  <tr style="display:none;">
+                                                       <td></td>
+                                                       <td></td>
+                                                       <td></td>
+                                                       <td></td>
+                                                       <td class="d-flex">
 
+                                                            <h2 class="mx-3">
+                                                                 <a href="">
+                                                                      <i class="fa fa-pencil-square"
+                                                                           data-bs-toggle="tooltip" title=""
+                                                                           data-bs-original-title="fa fa-pencil-square"
+                                                                           aria-label="fa fa-pencil-square"></i>
+                                                                 </a>
+                                                            </h2>
+                                                            <h2>
+                                                                 <a href="">
+                                                                      <i class="fa fa-trash" data-bs-toggle="tooltip"
+                                                                           title="" data-bs-original-title="fa fa-trash"
+                                                                           aria-label="fa fa-trash"></i>
+                                                                 </a>
+                                                            </h2>
+                                                       </td>
+                                                  </tr>
                                              </tbody>
                                         </table>
                                    </div>
@@ -115,6 +138,35 @@ require_once("include/css.php");
                var page = "ajax/get_seller_category.php";
                var count = 1;
                var tr = ``;
+               $("body").on('click', '.btn_delete', function () {
+                    console.log("delete succes");
+                    $(this).parent().parent().parent().hide(1500);
+                    var category_id = $(this).parent().parent().parent().attr("data-id");
+                    var page = `ajax/delete_category.php?category_id=${category_id}`;
+                    if (confirm("Category Deleted Yes And No")) {
+                         $.get(page, function (data, status) {
+                              console.log(data);
+                              if (data == 1) {
+                                   alert("Category Deleted SuccessFully");
+                              }
+                         });
+                    }
+               });
+               $("body").on('click', '.btn_edit', function (data, status) {
+                    console.log("edit succes");
+                    var title = $(this).parent().parent().parent().find("td").eq(1).text();
+                    var image = $(this).parent().parent().parent().find("td").eq(2).html();
+                    var status = $(this).parent().parent().parent().find("td").eq(3).text();
+                    // console.log(image.attr('scr'));
+                    $("#title").val(title);
+                    if (status == "Live") {
+                         $("input[name='status'][value='0']").prop("checked", true);
+                    } else {
+                         $("input[name='status'][value='1']").prop("checked", true);
+                    }
+                    $("#submit").html("Update Category");
+                    $("#submit").attr("type", "button");
+               });
                $.get(page, function (data, status) {
                     console.log(data);
                     console.log(status);
@@ -142,8 +194,7 @@ require_once("include/css.php");
                          <tr>`;
                     });
                     $("#mytable").append(tr);
-
-               })
+               });
           });
      </script>
      <?php

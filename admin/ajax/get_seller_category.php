@@ -3,7 +3,7 @@ session_start();
 require_once("../include/connection.php");
 
 try {
-    $_SESSION['seller_id']=1;
+    $_SESSION['seller_id']=1; //this is come from login page
     $sql = "SELECT * FROM category WHERE saleseman_id = ?";  
     $statement = $db->prepare($sql);
     $statement ->bindparam(1,$_SESSION['seller_id']);
@@ -12,7 +12,7 @@ try {
     $table = $statement->fetchAll();
     // var_dump($table);
     $table = json_encode($table);
-    echo $table;
+     echo $table;
 } 
 catch (PDOException $error) {
     LogError($error);
