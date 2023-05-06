@@ -1,4 +1,6 @@
 <?php
+session_start();
+require_once("include/connection.php");
 require_once("include/css.php");
 ?>
 </head>
@@ -19,9 +21,11 @@ require_once("include/css.php");
                               </div>
                               <div class="card-body">
                                    <div class="table-responsive">
-                                        <table class="table table-bordered text-nowrap border-bottom" id="basic-datatable">
+                                        <table class="table table-bordered text-nowrap border-bottom"
+                                             id="basic-datatable">
                                              <thead>
                                                   <tr>
+                                                       <th class="wd-15p border-bottom-0">Sr No</th>
                                                        <th class="wd-15p border-bottom-0">User name</th>
                                                        <th class="wd-15p border-bottom-0">Bill date</th>
                                                        <th class="wd-20p border-bottom-0">Mobile number</th>
@@ -35,32 +39,82 @@ require_once("include/css.php");
                                                   </tr>
                                              </thead>
                                              <tbody>
-                                                  <tr>
-                                                       <td>Bella</td>
-                                                       <td>Chloe</td>
-                                                       <td>System Developer</td>
-                                                       <td>System Developer</td>
-                                                       <td>System Developer</td>
-                                                       <td>System Developer</td>
-                                                       <td>System Developer</td>
-                                                       <td>System Developer</td>
-                                                       <td align="center">
-                                                            <h3><i class="fa fa-eye" data-bs-toggle="tooltip" title="" data-bs-original-title="View More" aria-label="fa fa-eye"></i></h3>
-                                                       </td>
-                                                  </tr>
-                                                  <tr>
-                                                       <td>Bella</td>
-                                                       <td>Chloe</td>
-                                                       <td>System Developer</td>
-                                                       <td>System Developer</td>
-                                                       <td>System Developer</td>
-                                                       <td>System Developer</td>
-                                                       <td>System Developer</td>
-                                                       <td>System Developer</td>
-                                                       <td align="center">
-                                                            <h3><i class="fa fa-eye" data-bs-toggle="tooltip" title="" data-bs-original-title="View More" aria-label="fa fa-eye"></i></h3>
-                                                       </td>
-                                                  </tr>
+                                                  <?php
+                                                  $sql = "SELECT * FROM bill";
+                                                  $statement = $db->prepare($sql);
+                                                  $statement->setFetchMode(PDO::FETCH_ASSOC);
+                                                  $statement->execute();
+                                                  $table = $statement->fetchAll();
+                                                  // var_dump($table);
+                                                  $count = 1;
+                                                  foreach ($table as $row) {
+                                                       ?>
+                                                       <tr>
+                                                            <td>
+                                                                 <?php echo $count++ ?>
+                                                            </td>
+                                                            <td>
+                                                                 <?php echo $row['fullname'] ?>
+                                                            </td>
+                                                            <td>
+                                                                 <?php echo date("d-m-Y", strtotime($row['billdate'])) ?>
+                                                            </td>
+                                                            <td>
+                                                                 <?php echo $row['mobile'] ?>
+                                                            </td>
+                                                            <td>
+                                                                 <?php echo $row['city'] ?>
+                                                            </td>
+                                                            <td>
+                                                                 <?php
+                                                                 if ($row['paymentmode'] == 1) {
+                                                                      echo "Cash On Delivery";
+                                                                 } else {
+                                                                      echo "Online Transfer";
+                                                                 }
+                                                                 ?>
+                                                            </td>
+                                                            <td>
+                                                                 <?php
+                                                                 if ($row['paymentstatus'] == 1) {
+                                                                      echo "PAID";
+                                                                 } else {
+                                                                      echo "UNPAID";
+                                                                 }
+                                                                 ?>
+                                                            </td>
+                                                            <td>
+                                                                 <?php
+                                                                 if ($row['orderstatus'] == 1) {
+                                                                      echo "CONFIRMED";
+                                                                 } else if ($row['orderstatus'] == 2) {
+                                                                      echo "DISPATCHED";
+                                                                 } else if ($row['orderstatus'] == 3) {
+                                                                      echo "DELIVERED";
+                                                                 } else if ($row['orderstatus'] == 4) {
+                                                                      echo "CANCEL";
+                                                                 } else {
+                                                                      echo "RETURN";
+                                                                 }
+                                                                 ?>
+                                                            </td>
+                                                            <td>
+                                                                 <?php echo $row['amount'] ?>
+                                                            </td>
+                                                            <td align="center">
+                                                                 <h3>
+                                                                      <a href="seller_view_full_bill.php?id=<?php echo $row['id']; ?>">
+                                                                           <i class="fa fa-eye" data-bs-toggle="tooltip"
+                                                                                title="" data-bs-original-title="View More"
+                                                                                aria-label="fa fa-eye">
+                                                                           </i>
+                                                                      </a>
+                                                                 </h3>
+                                                            </td>
+                                                       </tr>
+                                                       <?php
+                                                  }
+                                                  ?>
                                              </tbody>
                                         </table>
                                    </div>

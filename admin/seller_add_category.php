@@ -42,7 +42,8 @@ require_once("include/css.php");
                                                             <label class="form-label">Enter Photo</label>
                                                             <div class="input-group">
                                                                  <input type="file" id="image" name="image"
-                                                                      class="form-control" required>
+                                                                      class="form-control">
+                                                                 <label for="" id="image_label"></label>
                                                             </div>
                                                        </div>
                                                        <div class="row">
@@ -65,10 +66,11 @@ require_once("include/css.php");
                                                             </div>
                                                        </div>
                                                        <div class="text-end">
-                                                            <button type="submit" class="btn  btn-lg btn-primary">Save
+                                                            <button type="submit" id="submit"
+                                                                 class="btn  btn-lg btn-primary">Save
                                                                  Confirm</button>
                                                             <button type="reset" class="btn  btn-lg btn-danger">Clear
-                                                                 All</button>
+                                                                 All</button>   
                                                        </div>
                                                   </div>
                                              </form>
@@ -138,6 +140,7 @@ require_once("include/css.php");
                var page = "ajax/get_seller_category.php";
                var count = 1;
                var tr = ``;
+               var edit_id;
                $("body").on('click', '.btn_delete', function () {
                     console.log("delete succes");
                     $(this).parent().parent().parent().hide(1500);
@@ -155,8 +158,9 @@ require_once("include/css.php");
                $("body").on('click', '.btn_edit', function (data, status) {
                     console.log("edit succes");
                     var title = $(this).parent().parent().parent().find("td").eq(1).text();
-                    var image = $(this).parent().parent().parent().find("td").eq(2).html();
                     var status = $(this).parent().parent().parent().find("td").eq(3).text();
+                    // var image = $(this).parent().parent().parent().find("td").eq(2).html();
+                    edit_id = $(this).parent().parent().parent().attr("data-id");
                     // console.log(image.attr('scr'));
                     $("#title").val(title);
                     if (status == "Live") {
@@ -194,6 +198,44 @@ require_once("include/css.php");
                          <tr>`;
                     });
                     $("#mytable").append(tr);
+               });
+               $("#submit").click(function () {
+                    if ($("#submit").html() == "Update Category") {
+                         var title = $("#title").val();
+                         var status = parseInt($("input[name='status']:checked").val());
+                         var page = "ajax/update_category.php";
+                         var my_data = {
+                              "title": title,
+                              "status": status,
+                              "id": edit_id
+                         }
+                         $.post(page, my_data, function (data, s) {
+                              console.log(data);
+                              if (data == 1) {
+                                   alert("Category Updated SuccessFully");
+                                   var tr = $(`tr[data-id='${edit_id}']`);
+                                   tr.find("td").eq(1).text(title);
+                                   console.log("this is status ", status);
+                                   if (status == 0) {
+                                        tr.find("td").eq(3).text("Live");
+                                   }
+                                   else if (status == 1) {
+                                        tr.find("td").eq(3).text("Not Live");
+                                   }
+                                   data = " ";
+                                   if ($("#image").val() == " " || $("#image").val() == null) {
+                                        $("#image_label").text("Please Select a file");
+                                   }
+                              }
+                         }).then(function () {
+                              $("#submit").html("Save Category");
+                              $("#submit").attr("type", "submit");
+                         });
+                         $("#title").val(" ");
+                         // $("#image").val(" ");
+                         $("input[name='status']").prop("checked", false);
+
+                    }
                });
           });
      </script>
